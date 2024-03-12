@@ -5,27 +5,30 @@ var next_state = "idle"
 var previous_state
 var canMove = true
 var has_not_dropped_xp = true
+var gravity = 9.8
+
 
 @export var health = 1000
 @onready var nav = $NavigationAgent3D
-@onready var speed = 5.0
+@onready var speed = 105.0
 @onready var player 
 @onready var turn_speed = 2
-@onready var marker_3d = $"../../Marker3D"
+@onready var marker_3d = $"../Marker3D"
 
 @onready var blood_spray = preload("res://scenes/bloodsplatter.tscn")
 @onready var xp_drop = preload("res://scenes/xp_drop.tscn")
 @onready var animation_player = $"../AnimationPlayer"
 
 
-
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
-	animation_player.set_speed_scale(1) 
+	
 
 	
 func _physics_process(delta):
-
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	
 	if previous_state != current_state:
 		$StateLabel.text = current_state
 		$StateLabel2.text = current_state

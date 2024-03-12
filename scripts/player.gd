@@ -364,11 +364,10 @@ func _on_sword_player_animation_finished(anim_name):
 	print(anim_name)
 	if anim_name == "sword_swing":
 		can_attack = true
-		print("SDDDDDDDDDDDDDDDDDDDASDSA")
+		
 	if anim_name == "parry_attack":
 		can_attack = true
-		print("Biggaaay")
-
+		
 func fall_off():
 	animation_player.play("fade_to_blk")
 

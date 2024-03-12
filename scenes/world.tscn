@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://56gg0wdbwpvw"]
+[gd_scene load_steps=47 format=3 uid="uid://56gg0wdbwpvw"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_pol1r"]
 [ext_resource type="Material" uid="uid://cgvmjno84gw83" path="res://shaders/distorted.tres" id="3_js26k"]
@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://vt22m8wwubq4" path="res://assets/castle.blend" id="14_0h58l"]
 [ext_resource type="PackedScene" uid="uid://cys2xpm4d6tsv" path="res://scenes/cutscene.tscn" id="21_cnsbv"]
 [ext_resource type="ArrayMesh" uid="uid://b4pdemgwl307n" path="res://scenes/Groundplane.res" id="23_ayv77"]
+[ext_resource type="PackedScene" uid="uid://bcn2tf6ob6uwh" path="res://scenes/next_level_area.tscn" id="24_l38mv"]
+[ext_resource type="PackedScene" uid="uid://d138xttscoyln" path="res://scenes/boss_environment.tscn" id="25_henx6"]
 [ext_resource type="PackedScene" uid="uid://f2kypnebx5cd" path="res://scenes/illusory_wall.tscn" id="25_jmcxs"]
 [ext_resource type="PackedScene" uid="uid://cic604ff25fqo" path="res://assets/plateau.blend" id="26_vc6kl"]
 [ext_resource type="PackedScene" uid="uid://bmmu80yvkxxap" path="res://undead_enemy_final.tscn" id="27_ckou8"]
@@ -145,11 +147,40 @@ tracks/1/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_hlgth"]
+resource_name = "start_game_fade"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r7jiv"]
 _data = {
 "RESET": SubResource("Animation_w2083"),
 "fade_in_out": SubResource("Animation_kj7gw"),
-"fade_when_falling": SubResource("Animation_5ovpe")
+"fade_when_falling": SubResource("Animation_5ovpe"),
+"start_game_fade": SubResource("Animation_hlgth")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fcnhk"]
@@ -221,34 +252,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
-}
-
-[sub_resource type="Animation" id="Animation_8bfmc"]
-resource_name = "jump"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:rotation")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 0.5, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0, 0.0349066), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.0001, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 0.5, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.1, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_on70q"]
@@ -346,7 +349,6 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pesed"]
 _data = {
 "RESET": SubResource("Animation_faa4f"),
-"jump": SubResource("Animation_8bfmc"),
 "parry_attack": SubResource("Animation_on70q"),
 "sword_swing": SubResource("Animation_1w55c")
 }
@@ -411,9 +413,38 @@ tracks/0/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_838y5"]
+resource_name = "jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Neck/Head/eyes/Camera3D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0, 0.0349066), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Neck/Head/eyes/Camera3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0001, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.1, 0), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u7rfg"]
 _data = {
 "fade_to_blk": SubResource("Animation_3403x"),
+"jump": SubResource("Animation_838y5"),
 "walk": SubResource("Animation_32uh1")
 }
 
@@ -510,7 +541,7 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("parry_area", "reset_position") groups=["player"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2706, 15.1481, -157.235)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4478, 4.46842, -157.235)
 script = ExtResource("4_4gehb")
 parry_area = NodePath("ParryArea")
 reset_position = NodePath("../Marker3D")
@@ -598,7 +629,7 @@ mesh = ExtResource("23_ayv77")
 skeleton = NodePath("../..")
 
 [node name="windmill_hill" parent="NavigationRegion3D" instance=ExtResource("5_wlu21")]
-transform = Transform3D(2.66117, 0, 0.615261, 0, 2.73137, 0, -0.615261, 0, 2.66117, 55.1332, -2.52815, -97.2106)
+transform = Transform3D(2.57828, 0, -0.901586, 0, 2.73137, 0, 0.901586, 0, 2.57828, 55.1332, -2.52815, -97.2106)
 
 [node name="crate" parent="NavigationRegion3D" instance=ExtResource("29_m0n1f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6316, -2.56309, -78.9113)
@@ -634,7 +665,7 @@ transform = Transform3D(5.305, 0, 0, 0, 5.305, 0, 0, 0, 5.305, 3.35041, 2.02694,
 transform = Transform3D(-2.18933, 0, -1.43004, 0, 2.615, 0, 1.43004, 0, -2.18933, -48.584, -1.94447, -149.601)
 
 [node name="windmill_hill3" parent="NavigationRegion3D" instance=ExtResource("5_wlu21")]
-transform = Transform3D(2.60223, 0, -0.258038, 0, 2.615, 0, 0.258038, 0, 2.60223, 47.742, -1.94447, -149.601)
+transform = Transform3D(2.14558, 0, -1.49488, 0, 2.615, 0, 1.49488, 0, 2.14558, 47.742, -1.94447, -149.601)
 
 [node name="Cutscene" parent="." instance=ExtResource("21_cnsbv")]
 
@@ -695,6 +726,10 @@ shape = SubResource("BoxShape3D_awgp4")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70015, 0.853929, -303.126)
+
+[node name="NextLevelArea" parent="." instance=ExtResource("24_l38mv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -157.617)
+next_location = ExtResource("25_henx6")
 
 [connection signal="animation_finished" from="Player/Neck/Head/eyes/SwordPlayer" to="Player" method="_on_sword_player_animation_finished"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

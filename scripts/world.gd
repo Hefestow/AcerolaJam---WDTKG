@@ -10,7 +10,7 @@ extends Node3D
 
 func _ready():
 	$CanvasLayer/ColorRect.visible = false
-	
+	$CanvasLayer/LevelTransitionAnim.play("start_game_fade")
 	var label = get_node("chest")
 	if label == null:
 		return

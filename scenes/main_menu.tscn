@@ -1,0 +1,220 @@
+[gd_scene load_steps=16 format=3 uid="uid://bx36ld3e5x8l4"]
+
+[ext_resource type="PackedScene" uid="uid://vt22m8wwubq4" path="res://assets/castle.blend" id="1_0qbld"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_g2u5i"]
+[ext_resource type="Sky" uid="uid://brpvfslmlghh" path="res://scenes/world_sky_main_men.tres" id="3_o1g0j"]
+[ext_resource type="Texture2D" uid="uid://dufsi4t1bb5f5" path="res://assets/WDTKG.png" id="4_bltqu"]
+[ext_resource type="AudioStream" uid="uid://7byvrwkhx27p" path="res://SFX/Randomize13.wav" id="5_u2ra1"]
+[ext_resource type="AudioStream" uid="uid://cxpn18w068gwt" path="res://SFX/windmill_sound.wav" id="6_0qpxp"]
+[ext_resource type="Texture2D" uid="uid://c3x77p0xiyplw" path="res://assets/wdtkg_text_go_black_nw.png" id="7_2c1am"]
+[ext_resource type="Texture2D" uid="uid://bev4u8iyacy54" path="res://assets/wdtkg_text_go_black.png" id="7_2l5va"]
+[ext_resource type="Texture2D" uid="uid://d0ceivcwmxyky" path="res://assets/wdtkg_text_go_white.png" id="8_vkf3a"]
+
+[sub_resource type="Environment" id="Environment_rqwjg"]
+background_mode = 2
+sky = ExtResource("3_o1g0j")
+ambient_light_energy = 0.0
+fog_light_color = Color(0.254902, 0.501961, 0.32549, 1)
+fog_light_energy = 0.82
+fog_density = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.017
+volumetric_fog_albedo = Color(0.568627, 0.835294, 0.4, 1)
+volumetric_fog_length = 203.64
+volumetric_fog_detail_spread = 1.7411
+volumetric_fog_sky_affect = 0.88
+adjustment_enabled = true
+adjustment_brightness = 0.86
+adjustment_contrast = 0.82
+adjustment_saturation = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_amlsa"]
+size = Vector3(1, 1.63, 2.435)
+
+[sub_resource type="Animation" id="Animation_od5rw"]
+resource_name = "camera_waltz"
+length = 15.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 7, 15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-37.0155, -2.94325, -285.149), Vector3(-41.575, -2.94325, -285.149), Vector3(-37.0155, -2.94325, -285.149)]
+}
+
+[sub_resource type="Animation" id="Animation_81try"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-37.0155, -2.94325, -285.149)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qu31y"]
+resource_name = "fade_to_black"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_game"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7f4ld"]
+_data = {
+"RESET": SubResource("Animation_81try"),
+"camera_waltz": SubResource("Animation_od5rw"),
+"fade_to_black": SubResource("Animation_qu31y")
+}
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_g2u5i")
+
+[node name="castle" parent="." instance=ExtResource("1_0qbld")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.67125, 0, 2.19373)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.767175, 0.200725, -0.609222, 0.208507, 0.976235, 0.0590798, 0.606603, -0.0817027, -0.790796, -37.0155, -2.94325, -285.149)
+fov = 50.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rqwjg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3699, -7.96135, -274.894)
+visible = false
+mesh = SubResource("BoxMesh_amlsa")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.000226931, 1, 0, -1, 0.000226931, -23.3699, -6.80521, -276.328)
+visible = false
+mesh = SubResource("BoxMesh_amlsa")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.000226931, 1, 0, -1, 0.000226931, -23.3699, -5.70264, -278.778)
+visible = false
+mesh = SubResource("BoxMesh_amlsa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7f4ld")
+}
+autoplay = "camera_waltz"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 887.0
+offset_bottom = 759.0
+scale = Vector2(0.675, 0.675)
+texture = ExtResource("4_bltqu")
+
+[node name="StartSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_u2ra1")
+volume_db = -21.109
+
+[node name="MenuSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_0qpxp")
+volume_db = -37.584
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = 232.0
+offset_top = 331.0
+offset_right = 544.0
+offset_bottom = 597.0
+scale = Vector2(0.71, 0.71)
+texture_normal = ExtResource("7_2c1am")
+texture_pressed = ExtResource("7_2l5va")
+texture_hover = ExtResource("8_vkf3a")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
