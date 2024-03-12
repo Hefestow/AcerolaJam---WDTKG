@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://buoiw1wqxjkrg"]
+
+[ext_resource type="PackedScene" uid="uid://3ib6rpf7vbg1" path="res://assets/crate.blend" id="1_h0egr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pyswp"]
+size = Vector3(1.98499, 1.96028, 1.98183)
+
+[node name="crate" instance=ExtResource("1_h0egr")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00469971, -0.0159683, -0.0146103)
+shape = SubResource("BoxShape3D_pyswp")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dscttk2cj8djt"]
+
+[ext_resource type="PackedScene" uid="uid://clxdifuw5u3k4" path="res://assets/windmill_hill.glb" id="1_qnpqa"]
+[ext_resource type="Script" path="res://scripts/windmill_hill.gd" id="2_svfag"]
+[ext_resource type="AudioStream" uid="uid://cxpn18w068gwt" path="res://SFX/windmill_sound.wav" id="3_s6lht"]
+
+[node name="windmill_hill" instance=ExtResource("1_qnpqa")]
+script = ExtResource("2_svfag")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2"]
+stream = ExtResource("3_s6lht")
+unit_size = 29.98
+pitch_scale = 0.83
+autoplay = true
+max_distance = 70.0

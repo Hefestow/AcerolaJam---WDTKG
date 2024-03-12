@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4qhirpbtle35"]
+
+[ext_resource type="PackedScene" uid="uid://3ib6rpf7vbg1" path="res://assets/crate.blend" id="1_gq0ph"]
+[ext_resource type="Texture2D" uid="uid://c72qrwjv588sw" path="res://assets/box_text_new.png" id="2_1f8ny"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s3wcq"]
+size = Vector3(1.98499, 1.96028, 1.98183)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o1t2q"]
+albedo_texture = ExtResource("2_1f8ny")
+
+[node name="crate" instance=ExtResource("1_gq0ph")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00469971, -0.0159683, -0.0146103)
+shape = SubResource("BoxShape3D_s3wcq")
+
+[node name="Cube" parent="." index="1"]
+material_override = SubResource("StandardMaterial3D_o1t2q")

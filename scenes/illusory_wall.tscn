@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://f2kypnebx5cd"]
+
+[ext_resource type="Script" path="res://scripts/illusory_wall.gd" id="1_0xpph"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s6y1a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qxr5j"]
+size = Vector3(1.92871, 0.207855, 1.83972)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1po57"]
+size = Vector3(1.99048, 1.98926, 0.001)
+
+[node name="illusoryWall" type="StaticBody3D"]
+script = ExtResource("1_0xpph")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_s6y1a")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.072403, 0.0414429)
+shape = SubResource("BoxShape3D_qxr5j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_1po57")
+
+[connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]

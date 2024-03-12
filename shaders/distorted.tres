@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cgvmjno84gw83"]
+
+[ext_resource type="Shader" path="res://shaders/distortion_clear.gdshader" id="1_0u2n6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4ce3c"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xyvvk"]
+noise = SubResource("FastNoiseLite_4ce3c")
+
+[resource]
+shader = ExtResource("1_0u2n6")
+shader_parameter/radius = 0.459
+shader_parameter/effectControl = 0.309
+shader_parameter/burnSpeed = 0.076
+shader_parameter/shape = 1.0
+shader_parameter/textureNoise = SubResource("NoiseTexture2D_xyvvk")

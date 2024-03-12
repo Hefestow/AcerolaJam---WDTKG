@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd3efs12mu0tp"]
+
+[ext_resource type="PackedScene" uid="uid://du16t7dcoykmi" path="res://assets/undead.blend" id="1_igq2e"]
+[ext_resource type="Script" path="res://scripts/undead_enemy.gd" id="2_out62"]
+[ext_resource type="PackedScene" uid="uid://dp53fjaex67ts" path="res://dialogue/chatbox.tscn" id="3_ej1or"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s2xfe"]
+size = Vector3(6.71284, 4.41504, 7.43018)
+
+[node name="undead" instance=ExtResource("1_igq2e")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("2_out62")
+
+[node name="Empty_001" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -2.16937)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0.138311, 0.0253791, -0.00490268, 0.990052)
+bones/0/scale = Vector3(0.995256, 0.995255, 0.995256)
+bones/1/rotation = Quaternion(-0.0219672, -0.0481925, -0.0636826, 0.996564)
+bones/2/position = Vector3(0.244683, 0.611619, -0.00842565)
+bones/2/rotation = Quaternion(0.0215102, 0.164699, 0.972325, -0.164305)
+bones/2/scale = Vector3(1.02713, 1.02713, 1.02713)
+bones/3/rotation = Quaternion(-0.0255306, 0.0165804, 0.13004, 0.991041)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/position = Vector3(-0.373957, 0.602116, -0.0724371)
+bones/4/rotation = Quaternion(-0.0435933, 0.0817163, 0.986063, 0.138212)
+bones/4/scale = Vector3(1.06928, 1.06928, 1.06928)
+bones/5/rotation = Quaternion(0.164143, -4.92784e-05, 0.1264, 0.978305)
+bones/6/position = Vector3(0.14067, -0.10277, 0.124682)
+bones/6/rotation = Quaternion(-0.0255165, 0.277733, 0.952923, -0.118958)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.43697, 0.491044, 0.444422, 0.608622)
+bones/9/position = Vector3(-0.225907, -0.0991273, 0.0795799)
+bones/9/rotation = Quaternion(-0.00848527, 0.203342, 0.977386, 0.0574222)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(0.00944988, 0.00889586, 0.11462, 0.993325)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(0.398258, -0.520636, -0.503783, 0.562611)
+bones/11/scale = Vector3(1, 1, 1)
+
+[node name="Area3D" type="Area3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.874005, 0.0628448, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65748, 0.890137, 0.619873)
+shape = SubResource("BoxShape3D_s2xfe")
+
+[node name="Timer" type="Timer" parent="." index="4"]
+autostart = true
+
+[node name="Chatbox" parent="." index="5" instance=ExtResource("3_ej1or")]
+
+[node name="Cylinder" parent="." index="6"]
+visible = false
+
+[node name="AnimationPlayer" parent="." index="7"]
+autoplay = "Rest-loop"
+
+[node name="Label" type="Label" parent="." index="8"]
+visible = false
+offset_left = 508.0
+offset_top = 587.0
+offset_right = 738.0
+offset_bottom = 628.0
+theme_override_font_sizes/font_size = 40
+text = "[E] Talk"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="9"]
+
+[node name="FaceDirection" type="Node3D" parent="." index="10"]
+
+[node name="StateLabel" type="Label3D" parent="." index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50641, 0)
+billboard = 1
+text = "Heya gamers"
+font_size = 107
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="dialogue_finished" from="Chatbox" to="." method="_on_chatbox_dialogue_finished"]

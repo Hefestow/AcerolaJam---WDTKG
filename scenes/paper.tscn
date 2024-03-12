@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://2q67soea1aey"]
+
+[ext_resource type="PackedScene" uid="uid://ddcsyw61cfnjs" path="res://assets/paper.blend" id="1_3bemi"]
+
+[node name="paper" instance=ExtResource("1_3bemi")]
+
+[node name="Label3D" type="Label3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.169061, 0.583859, -0.0914989)
+billboard = 1
+text = "Heya, wanna
+ buy some weed?"

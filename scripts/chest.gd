@@ -1,0 +1,54 @@
+extends Node3D
+
+signal player_entered_chest_area
+signal player_left_chest_area
+var player_can_interact = false
+var chest_open = false
+var anim_finished = true
+@onready var chatbox = $Chatbox
+@export_file("*.json") var d_file
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	chatbox.d_file = d_file
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if Input.is_action_just_pressed("interact") and player_can_interact:
+		if anim_finished:
+			if !chest_open:
+				$AnimationPlayer.play("open")
+				chest_open = true
+				anim_finished = false
+				chatbox.start()
+				player_can_interact = false
+			else:
+				$AnimationPlayer.play("close")
+				anim_finished = false
+				chest_open = false
+
+
+func _on_area_3d_body_entered(body):
+	if body.is_in_group("player"):
+		emit_signal("player_entered_chest_area")
+		player_can_interact = true
+
+
+func _on_area_3d_body_exited(body):
+	if body.is_in_group("player"):
+		emit_signal("player_left_chest_area")
+		player_can_interact = false
+		chatbox.close_dialogue()
+		$AnimationPlayer.play("close")
+		chest_open = false
+		anim_finished = false
+		
+		
+func _on_animation_player_animation_finished(anim_name):
+	anim_finished = true
+
+func player_can_interact_func():
+	$AnimationPlayer.play("close")
+	anim_finished = false
+	player_can_interact = false
+	chest_open = false

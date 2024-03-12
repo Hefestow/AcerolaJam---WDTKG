@@ -1,0 +1,117 @@
+[gd_scene load_steps=10 format=3 uid="uid://bmmu80yvkxxap"]
+
+[ext_resource type="PackedScene" uid="uid://du16t7dcoykmi" path="res://assets/undead.blend" id="1_ubvuk"]
+[ext_resource type="PackedScene" uid="uid://dp53fjaex67ts" path="res://dialogue/chatbox.tscn" id="2_ia448"]
+[ext_resource type="Script" path="res://scripts/undead_enemy.gd" id="2_lu7pm"]
+[ext_resource type="AudioStream" uid="uid://cpmlvxixhe85t" path="res://SFX/Enemyhit.wav" id="4_omh3r"]
+[ext_resource type="AudioStream" uid="uid://ds72xxxbr6or5" path="res://SFX/Enemyhit_2.wav" id="5_rvjtf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nsl3o"]
+radius = 0.495
+height = 3.944
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1yyu"]
+size = Vector3(1.6748, 3.55225, 1.61127)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_p2q2u"]
+playback_mode = 1
+random_pitch = 1.1
+streams_count = 2
+stream_0/stream = ExtResource("4_omh3r")
+stream_0/weight = 1.617
+stream_1/stream = ExtResource("5_rvjtf")
+stream_1/weight = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yy5ns"]
+size = Vector3(1.34863, 2.65918, 1.38867)
+
+[node name="UndeadEnemy" instance=ExtResource("1_ubvuk")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("2_lu7pm")
+
+[node name="Armature" parent="." index="2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.230886, 0.217692, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0.138311, 0.0253791, -0.00490268, 0.990052)
+bones/0/scale = Vector3(0.995256, 0.995255, 0.995256)
+bones/1/rotation = Quaternion(-0.0219672, -0.0481925, -0.0636826, 0.996564)
+bones/2/position = Vector3(0.244683, 0.611619, -0.00842565)
+bones/2/rotation = Quaternion(0.0215102, 0.164699, 0.972325, -0.164305)
+bones/2/scale = Vector3(1.02713, 1.02713, 1.02713)
+bones/3/rotation = Quaternion(-0.0255306, 0.0165804, 0.13004, 0.991041)
+bones/3/scale = Vector3(1.30118, 1.30118, 1.30118)
+bones/4/position = Vector3(-0.373957, 0.602116, -0.0724371)
+bones/4/rotation = Quaternion(-0.0435933, 0.0817163, 0.986063, 0.138212)
+bones/4/scale = Vector3(1.06928, 1.06928, 1.06928)
+bones/5/rotation = Quaternion(0.164143, -4.92784e-05, 0.1264, 0.978305)
+bones/6/position = Vector3(0.14067, -0.10277, 0.124682)
+bones/6/rotation = Quaternion(-0.0255165, 0.277733, 0.952923, -0.118958)
+bones/6/scale = Vector3(1.10206, 1.10206, 1.10206)
+bones/7/rotation = Quaternion(-0.115936, -0.0359818, -0.0892581, 0.988583)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.43697, 0.491044, 0.444423, 0.608623)
+bones/9/position = Vector3(-0.225907, -0.0991273, 0.0795799)
+bones/9/rotation = Quaternion(-0.00848526, 0.203342, 0.977386, 0.0574222)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(0.398258, -0.520636, -0.503783, 0.562611)
+bones/11/scale = Vector3(1, 1, 1)
+
+[node name="Cylinder" parent="." index="3"]
+visible = false
+
+[node name="Chatbox" parent="." index="5" instance=ExtResource("2_ia448")]
+
+[node name="Label" type="Label" parent="." index="6"]
+visible = false
+offset_left = 508.0
+offset_top = 587.0
+offset_right = 738.0
+offset_bottom = 628.0
+theme_override_font_sizes/font_size = 40
+text = "[E] Talk"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="7"]
+height = 3.0
+radius = 1.0
+
+[node name="FaceDirection" type="Node3D" parent="." index="8"]
+
+[node name="StateLabel" type="Label3D" parent="." index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50641, 0)
+billboard = 1
+text = "Heya gamers"
+font_size = 107
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209723, -0.113777, -0.0149994)
+shape = SubResource("CapsuleShape3D_nsl3o")
+
+[node name="TakeDamageArea" type="Area3D" parent="." index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.874005, 0.0628448, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TakeDamageArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.02033, 0.45874, -0.00597006)
+shape = SubResource("BoxShape3D_c1yyu")
+
+[node name="TakeDMGTimer" type="Timer" parent="." index="12"]
+wait_time = 5.0
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="13"]
+stream = SubResource("AudioStreamRandomizer_p2q2u")
+pitch_scale = 0.88
+
+[node name="ParryArea" type="Area3D" parent="." index="14" groups=["parriable"]]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ParryArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.268544, -1.03557)
+shape = SubResource("BoxShape3D_yy5ns")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="TakeDamageArea" to="." method="_on_take_damage_area_area_entered"]
