@@ -92,4 +92,6 @@ parry={
 
 [layer_names]
 
-3d_physics/layer_3="ParryAttacks"
+3d_physics/layer_1="Player"
+3d_physics/layer_2="Enemy"
+3d_physics/layer_3="Ground"

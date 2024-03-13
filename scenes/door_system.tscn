@@ -94,7 +94,7 @@ _data = {
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5o51c"]
 height = 1.20452
-radius = 1.28716
+radius = 1.79729
 
 [node name="Door" type="Node3D" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("1_viuy4")
@@ -140,4 +140,6 @@ shape = SubResource("CylinderShape3D_5o51c")
 stream = ExtResource("4_mop88")
 pitch_scale = 0.52
 
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="Area3D" to="hinge/StaticBody3D" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

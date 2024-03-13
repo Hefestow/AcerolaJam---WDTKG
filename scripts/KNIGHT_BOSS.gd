@@ -5,20 +5,20 @@ var next_state = "idle"
 var previous_state
 var canMove = true
 var has_not_dropped_xp = true
-var gravity = 9.8
 
 
-@export var health = 1000
+
+@export var health = 100
 @onready var nav = $NavigationAgent3D
 @onready var speed = 105.0
 @onready var player 
 @onready var turn_speed = 2
 @onready var marker_3d = $"../Marker3D"
 
-@onready var blood_spray = preload("res://scenes/bloodsplatter.tscn")
+@onready var blood_spray = preload("res://scenes/bloodsplatter_boss.tscn")
 @onready var xp_drop = preload("res://scenes/xp_drop.tscn")
 @onready var animation_player = $AnimationPlayer
-
+var gravity = 970
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -39,7 +39,7 @@ func _physics_process(delta):
 		"idle":
 			idle()
 		"bite":
-			bite()
+			bite(delta)
 		"chase":
 			chase(delta)
 		"flinch":
@@ -48,6 +48,8 @@ func _physics_process(delta):
 
 
 func chase(delta):
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 	if previous_state != current_state:
 		animation_player.play("Walk")
 		
@@ -66,15 +68,17 @@ func idle():
 	if previous_state != current_state:
 		animation_player.play("Swing")
 	
-func bite():
+func bite(delta):
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 	if previous_state != current_state:
 		$FaceDirection.look_at(player.position, Vector3.UP)
 		rotate_y(deg_to_rad($FaceDirection.rotation.y * (turn_speed *20)))
 		animation_player.play("Swing")
 	
 func flinch(delta):
-	velocity = -(nav.get_next_path_position() - position). normalized() * (speed/14) * delta
-	move_and_collide(velocity)
+	#velocity = -(nav.get_next_path_position() - position). normalized() * (speed/14) * delta
+	#move_and_collide(velocity)
 	animation_player.play("Hurt")
 
 
@@ -84,7 +88,7 @@ func _on_area_3d_body_exited(body):
 
 func take_damage(num):
 	print("ouchies")
-	
+	next_state = "flinch"
 	var blood = blood_spray.instantiate()
 	blood.emitting = true
 	blood.position = position
@@ -95,15 +99,13 @@ func take_damage(num):
 	
 	
 	health -= num
-	if health <= 0 and has_not_dropped_xp:
-		for i in range(5):
-			spawn_drop_around_enemy()
-		has_not_dropped_xp = false
+	if health <= 0:
+		get_tree().get_first_node_in_group("main").end_screen()
 		call_deferred("queue_free")
 	print(health)
 	#print("we took ", num, "dmg")
 	
-func spawn_drop_around_enemy():
+func spawn_ddddddrop_around_enemy():
 
 	# Define a radius for the drop spawn area
 	var spawn_radius = 1.0  # Adjust this value based on your game's needs
@@ -137,9 +139,9 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 
-func _on_area_3d_body_entered(body):
-	if body.is_in_group("player"):
-		body.take_damage(20)
+#func _on_area_3d_body_entered(body):
+	#if body.is_in_group("player"):
+		#body.take_damage(20)
 
 
 
@@ -148,6 +150,7 @@ func _on_take_damage_area_area_entered(area):
 	if area.is_in_group("sword"):
 		if $TakeDMGTimer.time_left == 0:
 			#play_hurt_sfx()
+			
 			take_damage(20)
 			$TakeDMGTimer.start(.5)
 
@@ -169,4 +172,13 @@ func _on_cut_scene_animation_finished(anim_name):
 			$Pivot.rotation.y = deg_to_rad(90)
 
 
+
+
+
+
+
+
+func _on_damage_area_body_entered(body):
+	if body.is_in_group("player"):
+		body.take_damage(5)
 

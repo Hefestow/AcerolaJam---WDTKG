@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d3m32hqhh54bi"]
+[gd_scene load_steps=12 format=3 uid="uid://d3m32hqhh54bi"]
 
 [ext_resource type="Texture2D" uid="uid://bveu3sg7c1wh0" path="res://assets/knight_lowres_textured.png" id="2_cxtc5"]
 [ext_resource type="Script" path="res://scripts/KNIGHT_BOSS.gd" id="2_m6kyp"]
@@ -85,7 +85,10 @@ _data = {
 size = Vector3(1, 6.65, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hfqi4"]
-size = Vector3(6.71284, 4.41504, 7.43018)
+size = Vector3(6.71284, 4.41504, 4.42847)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t27ll"]
+size = Vector3(6.03357, 4.94189, 6.08649)
 
 [node name="knight_enemy" type="CharacterBody3D"]
 script = ExtResource("2_m6kyp")
@@ -99,28 +102,28 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.306189, -0.349612, 0.0220625)
 bones/0/enabled = true
 bones/0/position = Vector3(-0.306189, -0.212917, 0.0220625)
-bones/0/rotation = Quaternion(-0.000194309, -0.0104119, 0.000813287, 0.999946)
+bones/0/rotation = Quaternion(-0.00218635, -0.117154, 0.00915106, 0.993069)
 bones/0/scale = Vector3(1.02629, 1.02629, 1.02629)
 bones/1/name = "Head"
 bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.60166, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 2.60166, 0)
-bones/1/rotation = Quaternion(-7.75607e-05, 0.000753475, -0.0209814, 0.99978)
+bones/1/rotation = Quaternion(-0.00696384, 0.0084621, -0.235637, 0.971779)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "LeftArm"
 bones/2/parent = 0
 bones/2/rest = Transform3D(0.987326, -0.158692, -0.00180133, -0.148083, -0.925287, 0.349164, -0.0570763, -0.344472, -0.937058, 0, 2.42073, -1.42902)
 bones/2/enabled = true
-bones/2/position = Vector3(0.013975, 2.41415, -1.40268)
-bones/2/rotation = Quaternion(0.984005, -0.0330548, 0.0179194, -0.17413)
+bones/2/position = Vector3(0.204816, 2.52347, -1.69717)
+bones/2/rotation = Quaternion(0.818957, 0.438025, 0.353284, -0.112403)
 bones/2/scale = Vector3(1.01511, 1.01511, 1.01511)
 bones/3/name = "Bone.003"
 bones/3/parent = 2
 bones/3/rest = Transform3D(0.985772, 0.164444, 0.0347978, -0.168084, 0.965285, 0.19993, -0.000712607, -0.202934, 0.979192, -2.98023e-08, 1.13241, 1.45345e-07)
 bones/3/enabled = true
 bones/3/position = Vector3(-2.98023e-08, 1.13241, 1.45345e-07)
-bones/3/rotation = Quaternion(-0.0881647, 0.0319168, -0.0891008, 0.991599)
+bones/3/rotation = Quaternion(0.0535595, 0.266122, -0.138955, 0.952367)
 bones/3/scale = Vector3(1.57902, 1.57902, 1.57902)
 bones/4/name = "Bone.004"
 bones/4/parent = 3
@@ -133,15 +136,15 @@ bones/5/name = "RightLeg"
 bones/5/parent = 0
 bones/5/rest = Transform3D(0.988219, -0.152515, 0.012237, -0.152853, -0.987641, 0.0346408, 0.0068025, -0.0361034, -0.999325, 0.307661, -1.07439, 0.873387)
 bones/5/enabled = true
-bones/5/position = Vector3(-0.0805242, -0.980855, 0.922541)
-bones/5/rotation = Quaternion(0.996894, -0.0765903, 0.00478515, -0.017687)
+bones/5/position = Vector3(-0.0805241, -0.980855, 0.922541)
+bones/5/rotation = Quaternion(0.996895, -0.0766306, 0.00482686, -0.0174704)
 bones/5/scale = Vector3(0.999993, 1, 1)
 bones/6/name = "Bone.006"
 bones/6/parent = 5
 bones/6/rest = Transform3D(0.985509, 0.16948, -0.00697404, -0.16918, 0.985073, 0.0317679, 0.012254, -0.0301277, 0.999471, -1.21072e-08, 1.13607, -5.6345e-08)
 bones/6/enabled = true
 bones/6/position = Vector3(-1.21072e-08, 1.13607, -5.6345e-08)
-bones/6/rotation = Quaternion(-0.0154314, -0.00483032, -0.0849897, 0.996251)
+bones/6/rotation = Quaternion(-0.0150282, -0.00485124, -0.085014, 0.996255)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "Bone.009"
 bones/7/parent = 6
@@ -155,7 +158,7 @@ bones/8/parent = 0
 bones/8/rest = Transform3D(1, 1.11022e-16, -2.38418e-07, -3.22422e-09, -0.999909, -0.0135234, -2.38397e-07, 0.0135234, -0.999909, 0.556146, -1.0294, -0.731366)
 bones/8/enabled = true
 bones/8/position = Vector3(-0.220034, -1.13373, -0.541249)
-bones/8/rotation = Quaternion(0.997872, 0.0470508, -0.0275725, -0.0357523)
+bones/8/rotation = Quaternion(0.982498, 0.0416049, -0.175829, -0.0452984)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/name = "Bone.011"
 bones/9/parent = 8
@@ -176,14 +179,14 @@ bones/11/parent = 0
 bones/11/rest = Transform3D(-0.90551, -0.12991, -0.40395, -0.0303156, -0.929742, 0.366962, -0.423241, 0.344533, 0.837953, -0.272056, 2.6545, 1.63933)
 bones/11/enabled = true
 bones/11/position = Vector3(-0.272056, 2.6545, 1.63933)
-bones/11/rotation = Quaternion(-0.218113, 0.189352, 0.956895, 0.0303963)
+bones/11/rotation = Quaternion(-0.241301, 0.22719, 0.940451, 0.0755671)
 bones/11/scale = Vector3(1, 1, 1)
 bones/12/name = "Bone.008"
 bones/12/parent = 11
 bones/12/rest = Transform3D(0.991749, -0.128178, -0.00179217, 0.123348, 0.950383, 0.285584, -0.0349023, -0.283449, 0.958352, 1.78814e-07, 1.92235, 0)
 bones/12/enabled = true
 bones/12/position = Vector3(1.78814e-07, 1.92235, 0)
-bones/12/rotation = Quaternion(-0.1597, 0.0146063, 0.0826637, 0.98359)
+bones/12/rotation = Quaternion(-0.313965, 0.0778934, 0.27424, 0.905622)
 bones/12/scale = Vector3(1, 1, 1)
 
 [node name="Cube" type="MeshInstance3D" parent="Armature/Skeleton3D"]
@@ -204,20 +207,23 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.874005, 0.062845, -1.35236)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TakeDamageArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65748, -0.699427, 0.619873)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65748, -0.699427, 1.48303)
 shape = SubResource("BoxShape3D_hfqi4")
 
 [node name="TakeDMGTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="FaceDirection" type="Node3D" parent="."]
 
 [node name="StateLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.50641, 0)
+visible = false
 billboard = 1
 text = "Heya gamers"
 font_size = 107
 
 [node name="StateLabel2" type="Label" parent="."]
+visible = false
 offset_right = 149.0
 offset_bottom = 92.0
 theme_override_font_sizes/font_size = 40
@@ -227,5 +233,19 @@ text = "Heya gamers"
 height = 1.8
 radius = 1.0
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DamageArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.536438, -1.97095, -2.7972)
+shape = SubResource("BoxShape3D_t27ll")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="area_entered" from="TakeDamageArea" to="." method="_on_take_damage_area_area_entered"]
+[connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]

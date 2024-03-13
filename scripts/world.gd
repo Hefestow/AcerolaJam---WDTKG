@@ -3,15 +3,16 @@ extends Node3D
 
 @onready var level_transition_anim = $CanvasLayer/LevelTransitionAnim
 
+@onready var player = get_tree().get_first_node_in_group("player")
 @onready var label = $CanvasLayer/Label
 @onready var player_cam = $Player/Neck/Head/eyes/Camera3D
 @onready var cutscene_cam = $Cutscene/CutsceneCam
 @onready var undead = preload("res://undead_enemy_final.tscn")
-@onready var spawn_points = [$Spawner,$Spawner2,$Spawner3]
+@onready var spawn_points = [$Spawner,$Spawner2,$Spawner3,$Spawner4]
 @onready var spawn_timer = $SpawnTimer
-
+var event_started = false
 var enemy_count : int
-
+var spawned_initial = true
 
 
 func _ready():
@@ -24,8 +25,13 @@ func _ready():
 	label.player_left_chest_area.connect(interact_label_hide)
 	var undead_inst = undead.instantiate()
 	
-
-
+func _physics_process(delta):
+	get_tree().call_group("enemies", "update_target_location", player.global_transform.origin)
+	if event_started and areAllEnemiesDead():
+		$NavigationRegion3D/Door2.open()
+		event_started = false
+		$NavigationRegion3D/Door2/AudioStreamPlayer.play()
+		
 func change_level():
 	get_tree().change_scene_to_file("res://scenes/world_2.tscn")
 	
@@ -48,7 +54,11 @@ func interact_label_hide():
 
 
 func start_boss():
-	pass
+	if spawned_initial:
+		var undead_inst = undead.instantiate()
+		undead_inst.global_position = $Spawner2.global_position
+		add_child(undead_inst)
+		spawned_initial = false
 
 
 func areAllEnemiesDead():
@@ -71,10 +81,14 @@ func _on_start_boss_fight_area_body_entered(body):
 
 
 func _on_start_boss_area_body_entered(body):
+	
 	$NavigationRegion3D/Door.close()
 	spawn_timer.start()
-	enemy_count = 4
+	$CheckIfDead.start()
+	enemy_count = 1
 	start_boss()
+	get_tree().create_timer(5).timeout
+	event_started = true
 
 
 func _on_spawn_timer_timeout():
@@ -84,3 +98,7 @@ func _on_spawn_timer_timeout():
 			var undead_inst = undead.instantiate()
 			undead_inst.global_position = enemy.global_position
 			add_child(undead_inst)
+
+
+func _on_check_if_dead_timeout():
+	areAllEnemiesDead()

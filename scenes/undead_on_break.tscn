@@ -52,6 +52,7 @@ autostart = true
 
 [node name="Chatbox" parent="." index="5" node_paths=PackedStringArray("label") instance=ExtResource("3_pwycp")]
 label = NodePath("../Label")
+d_file = "<null>"
 
 [node name="Cylinder" parent="." index="6"]
 visible = false

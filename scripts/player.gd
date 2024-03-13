@@ -4,7 +4,7 @@ class_name Player extends CharacterBody3D
 
 @onready var head = $Neck/Head
 @onready var neck = $Neck
-@export var health = 10
+@export var health = 50
 @onready var crouched_collision = $crouched_collision
 @onready var standing_collision = $standing_collision
 @onready var ray_cast_3d = $RayCast3D

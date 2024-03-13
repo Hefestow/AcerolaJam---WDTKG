@@ -5,17 +5,20 @@ var next_state = "idle"
 var previous_state
 
 var has_not_dropped_xp = true
-
-@export var health = 1000
+var alive : bool = true
+@export var health = 50
 @onready var nav = $NavigationAgent3D
-@onready var speed = 5.0
+@onready var speed = 10.0
 @onready var player 
 @onready var turn_speed = 2
+
+
+@onready var navigation_agent = $NavigationAgent3D
 
 @onready var blood_spray = preload("res://scenes/bloodsplatter.tscn")
 @onready var xp_drop = preload("res://scenes/xp_drop.tscn")
 @onready var animation_player = $AnimationPlayer
-
+#var gravity = 9.8
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -23,6 +26,12 @@ func _ready():
 
 	
 func _physics_process(delta):
+	velocity = Vector3.ZERO
+	#if not is_on_floor():
+		#velocity.y -= gravity * delta
+	#else:
+		#velocity.y -= 2
+	
 	if previous_state != current_state:
 		$StateLabel.text = current_state
 	previous_state = current_state
@@ -41,10 +50,21 @@ func _physics_process(delta):
 
 
 func chase(delta):
+	#if not is_on_floor():
+		#velocity.y -= gravity * delta
+	#else:
+		#velocity.y -= 2
 	if previous_state != current_state:
 		animation_player.play("Running state")
 		
-	velocity = (nav.get_next_path_position() - position).normalized() * speed * delta
+	#velocity = (nav.get_next_path_position() - position).normalized() * speed * delta
+	var current_location = global_transform.origin
+	var new_location = navigation_agent.get_next_path_position()
+	var new_velocity = (new_location - current_location).normalized() * speed * delta
+	
+	navigation_agent.set_velocity_forced(new_velocity)
+	
+	
 	$FaceDirection.look_at(player.position, Vector3.UP)
 	rotate_y(deg_to_rad($FaceDirection.rotation.y * turn_speed))
 	
@@ -53,7 +73,7 @@ func chase(delta):
 		
 	if player.position.distance_to(position) > 1:
 		nav.target_position = player.position
-		move_and_collide(velocity)
+		
 		
 func idle():
 	next_state = "chase"
@@ -67,15 +87,19 @@ func bite():
 		animation_player.play("Swing")
 	
 func flinch(delta):
-	velocity = -(nav.get_next_path_position() - position). normalized() * (speed/14) * delta
-	move_and_collide(velocity)
+	#velocity = -(nav.get_next_path_position() - position). normalized() * (speed) * delta
+	#move_and_collide(velocity)
 	animation_player.play("Hurt")
 
 
 func _on_area_3d_body_exited(body):
 	if body.is_in_group("player"):
 		next_state = "idle"
-
+		
+		
+func is_alive() -> bool:
+	return alive
+	
 func take_damage(num):
 	print("ouchies")
 	next_state = "flinch"
@@ -91,7 +115,8 @@ func take_damage(num):
 	health -= num
 	if health <= 0 and has_not_dropped_xp:
 		for i in range(5):
-			spawn_drop_around_enemy()
+			pass
+			#spawn_drop_around_enemy()
 		has_not_dropped_xp = false
 		call_deferred("queue_free")
 	print(health)
@@ -156,3 +181,11 @@ func deflect():
 func _on_attack_area_body_entered(body):
 	if body.is_in_group("player"):
 		body.take_damage(5)
+
+
+func _on_navigation_agent_3d_velocity_computed(safe_velocity):
+	velocity = velocity.move_toward(safe_velocity, .25)
+	move_and_slide()
+
+func update_target_location(target_location):
+	navigation_agent.set_target_position(target_location)

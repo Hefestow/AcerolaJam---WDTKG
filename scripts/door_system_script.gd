@@ -26,19 +26,24 @@ func _process(delta):
 		#await get_tree().create_timer(0.6, false).timeout
 		#interactable = true
 
-
+func open():
+	animation_player.play("open")
 func close():
 	animation_player.play("close")
 
 
 
 func _on_area_3d_body_entered(body):
-	if not body is Player:
-		return
-	if has_not_opened:
+	if body.is_in_group("player"):
 		animation_player.play("open")
-		$"../../AudioStreamPlayer".playing = true
-		has_not_opened = false
+		$AudioStreamPlayer.playing = true
+		
 		#body.disable()
 		#await get_tree().create_timer(1).timeout
 		#get_tree().get_first_node_in_group("world").level_transition()
+
+
+func _on_area_3d_body_exited(body):
+	if body.is_in_group("player"):
+		animation_player.play("close")
+		$AudioStreamPlayer.playing = true
