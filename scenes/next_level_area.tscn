@@ -1,12 +1,79 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcn2tf6ob6uwh"]
+[gd_scene load_steps=10 format=3 uid="uid://bcn2tf6ob6uwh"]
 
 [ext_resource type="Script" path="res://scripts/NextLevelArea.gd" id="1_xjsmj"]
+[ext_resource type="Texture2D" uid="uid://dqknyncnsgsa5" path="res://assets/portrait.png" id="2_f0h7b"]
+[ext_resource type="PackedScene" uid="uid://cok56rt1242so" path="res://assets/portrait.blend" id="3_ouc3f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1tt2k"]
 size = Vector3(2.19727, 1.92358, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64ham"]
+albedo_texture = ExtResource("2_f0h7b")
+metallic = 1.0
+
 [sub_resource type="BoxMesh" id="BoxMesh_nmjxs"]
+material = SubResource("StandardMaterial3D_64ham")
 size = Vector3(1.905, 2.325, 0.395)
+
+[sub_resource type="Animation" id="Animation_1mc26"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qq06k"]
+resource_name = "level_transition"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_84d64"]
+_data = {
+"RESET": SubResource("Animation_1mc26"),
+"level_transition": SubResource("Animation_qq06k")
+}
 
 [node name="NextLevelArea" type="Area3D"]
 script = ExtResource("1_xjsmj")
@@ -15,6 +82,26 @@ script = ExtResource("1_xjsmj")
 shape = SubResource("BoxShape3D_1tt2k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_nmjxs")
+
+[node name="portrait" parent="." instance=ExtResource("3_ouc3f")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_84d64")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

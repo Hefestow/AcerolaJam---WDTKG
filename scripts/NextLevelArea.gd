@@ -1,6 +1,7 @@
 extends Area3D
 
 @export var next_location : PackedScene
+@onready var animation_player = $AnimationPlayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -15,5 +16,7 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
+		animation_player.play("level_transition")
+		await animation_player.animation_finished
 		get_tree().change_scene_to_file("res://scenes/boss_environment.tscn")
-		print(next_location)
+		

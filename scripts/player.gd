@@ -4,7 +4,7 @@ class_name Player extends CharacterBody3D
 
 @onready var head = $Neck/Head
 @onready var neck = $Neck
-
+@export var health = 10
 @onready var crouched_collision = $crouched_collision
 @onready var standing_collision = $standing_collision
 @onready var ray_cast_3d = $RayCast3D
@@ -21,7 +21,7 @@ class_name Player extends CharacterBody3D
 
 
 
-
+var sword_drawn = false
 var slide_timer = 0.0
 var slider_timer_max = 1.2
 
@@ -93,6 +93,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$Neck/Head/eyes/sword.visible = false
 	enable()
 	
 	
@@ -119,12 +120,8 @@ func _physics_process(delta):
 	#  velocity label
 	#label.text = "Velocity.x :" + str(velocity.x)
 	#label_2.text =  "Velocity.z :" + str(velocity.z)
-	if Input.is_action_just_pressed("swing") && can_attack:
-		can_attack = false
-		sword_player.play("sword_swing")
-	if Input.is_action_just_pressed("parry") && can_attack:
-		can_attack = false
-		sword_player.play("parry_attack")
+	if sword_drawn:
+		use_sword()
 	
 	# Input
 	var input_dir = Input.get_vector("left", "right", "forward", "backwards")
@@ -318,6 +315,9 @@ func _physics_process(delta):
 		
 	move_and_slide()
 	
+func draw_sword():
+	$Neck/Head/eyes/sword.visible = true
+	sword_player.play("draw_sword")
 	
 func jump()-> void:
 	jump_avaliable = false
@@ -348,7 +348,38 @@ func enable():
 	input_enabled = true
 
 func take_damage(num):
-	print(num)
+	$InvulnTimer.start
+	if $InvulnTimer.time_left == 0:
+		
+		health -= num
+		print(health)
+		if health <= 0:
+			$PlayerHit.play()
+			set_physics_process(false)
+			set_process(false)
+			
+			var tween = create_tween()
+			tween.tween_property(camera, "position", Vector3(0,-0.5,0), 1.5).set_delay(.2)
+			
+			tween.tween_property(camera, "rotation", Vector3(0,0,1), 1.5)
+			
+			await tween.finished
+			$CanvasLayer/TextureButton2.visible = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			get_tree().paused = true
+		else:
+			$PlayerHit.play()
+		update_health()
+	
+func use_sword():
+	if Input.is_action_just_pressed("swing") && can_attack:
+		can_attack = false
+		sword_player.play("sword_swing")
+	#if Input.is_action_just_pressed("parry") && can_attack:
+		#can_attack = false
+		#sword_player.play("parry_attack")
+	
+	
 
 func parry():
 	
@@ -358,10 +389,12 @@ func parry():
 			if area.is_in_group("parriable"):
 				area.get_parent().deflect()
 
-
+func update_health():
+	pass
+	#health_label.text = str(health)
 
 func _on_sword_player_animation_finished(anim_name):
-	print(anim_name)
+	
 	if anim_name == "sword_swing":
 		can_attack = true
 		
@@ -370,6 +403,16 @@ func _on_sword_player_animation_finished(anim_name):
 		
 func fall_off():
 	animation_player.play("fade_to_blk")
-
+	await animation_player.animation_finished
+	draw_sword()
+	
 func restart_area():
 	position = reset_position.position
+
+
+
+
+func _on_texture_button_2_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/world.tscn")
+	

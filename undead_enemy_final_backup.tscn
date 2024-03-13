@@ -1,14 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://bmmu80yvkxxap"]
+[gd_scene load_steps=29 format=3 uid="uid://e0vbnigy2b4k"]
 
-[ext_resource type="Texture2D" uid="uid://s6c867g4ota2" path="res://assets/peaceOmeat.png" id="2_eaurb"]
-[ext_resource type="PackedScene" uid="uid://dp53fjaex67ts" path="res://dialogue/chatbox.tscn" id="2_ia448"]
-[ext_resource type="Script" path="res://scripts/undead_enemy.gd" id="2_lu7pm"]
-[ext_resource type="Texture2D" uid="uid://ddgnuap24bskg" path="res://assets/Gold_metal_helm.jpg" id="3_kki6s"]
-[ext_resource type="Texture2D" uid="uid://gomx60m5xsvw" path="res://assets/windmill_hill_cloth_lowres_pants.png" id="4_45cxd"]
-[ext_resource type="AudioStream" uid="uid://cpmlvxixhe85t" path="res://SFX/Enemyhit.wav" id="4_omh3r"]
-[ext_resource type="Texture2D" uid="uid://d0gke2lkf8hen" path="res://assets/fabric_lowpoly_2.png" id="5_3toha"]
-[ext_resource type="AudioStream" uid="uid://ds72xxxbr6or5" path="res://SFX/Enemyhit_2.wav" id="5_rvjtf"]
-[ext_resource type="Animation" uid="uid://c80q5jwnwardy" path="res://scenes/swing_anim_enemy.res" id="6_ys5yy"]
+[ext_resource type="Script" path="res://scripts/undead_enemy.gd" id="1_tu28r"]
+[ext_resource type="Texture2D" uid="uid://s6c867g4ota2" path="res://assets/peaceOmeat.png" id="2_qerdi"]
+[ext_resource type="Texture2D" uid="uid://ddgnuap24bskg" path="res://assets/Gold_metal_helm.jpg" id="3_viopn"]
+[ext_resource type="Texture2D" uid="uid://gomx60m5xsvw" path="res://assets/windmill_hill_cloth_lowres_pants.png" id="4_unkso"]
+[ext_resource type="Texture2D" uid="uid://d0gke2lkf8hen" path="res://assets/fabric_lowpoly_2.png" id="5_xuy07"]
+[ext_resource type="Animation" uid="uid://c80q5jwnwardy" path="res://scenes/swing_anim_enemy.res" id="6_rcmgu"]
+[ext_resource type="PackedScene" uid="uid://dp53fjaex67ts" path="res://dialogue/chatbox.tscn" id="7_jxmml"]
+[ext_resource type="AudioStream" uid="uid://cpmlvxixhe85t" path="res://SFX/Enemyhit.wav" id="8_o2jne"]
+[ext_resource type="AudioStream" uid="uid://ds72xxxbr6or5" path="res://SFX/Enemyhit_2.wav" id="9_m8j36"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_poil1"]
 resource_name = "Material"
@@ -16,7 +16,7 @@ cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 metallic = 1.0
 emission_enabled = true
-emission_texture = ExtResource("2_eaurb")
+emission_texture = ExtResource("2_qerdi")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8cr2"]
 resource_name = "Helm"
@@ -24,7 +24,7 @@ cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 metallic = 1.0
 emission_enabled = true
-emission_texture = ExtResource("3_kki6s")
+emission_texture = ExtResource("3_viopn")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyx8v"]
 resource_name = "Pants"
@@ -32,7 +32,7 @@ cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 metallic = 1.0
 emission_enabled = true
-emission_texture = ExtResource("4_45cxd")
+emission_texture = ExtResource("4_unkso")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sv1pl"]
 resource_name = "Bandage"
@@ -40,7 +40,7 @@ cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 metallic = 1.0
 emission_enabled = true
-emission_texture = ExtResource("5_3toha")
+emission_texture = ExtResource("5_xuy07")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3bqma"]
 resource_name = "undead_Plane"
@@ -793,7 +793,7 @@ _data = {
 "Hurt": SubResource("Animation_fnkpl"),
 "Rest": SubResource("Animation_64ahq"),
 "Running state": SubResource("Animation_378g2"),
-"Swing": ExtResource("6_ys5yy"),
+"Swing": ExtResource("6_rcmgu"),
 "T-pose": SubResource("Animation_fn4ln")
 }
 
@@ -808,9 +808,9 @@ size = Vector3(1.01074, 2.10236, 1.20456)
 playback_mode = 1
 random_pitch = 1.1
 streams_count = 2
-stream_0/stream = ExtResource("4_omh3r")
+stream_0/stream = ExtResource("8_o2jne")
 stream_0/weight = 1.617
-stream_1/stream = ExtResource("5_rvjtf")
+stream_1/stream = ExtResource("9_m8j36")
 stream_1/weight = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yy5ns"]
@@ -820,7 +820,7 @@ size = Vector3(1.34863, 2.44977, 0.747558)
 size = Vector3(2.02441, 1.51547, 0.722111)
 
 [node name="UndeadEnemy" type="CharacterBody3D"]
-script = ExtResource("2_lu7pm")
+script = ExtResource("1_tu28r")
 
 [node name="Armature" type="Node3D" parent="."]
 transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, -0.230886, 0.217692, 0)
@@ -927,7 +927,7 @@ libraries = {
 "": SubResource("AnimationLibrary_3q02y")
 }
 
-[node name="Chatbox" parent="." instance=ExtResource("2_ia448")]
+[node name="Chatbox" parent="." instance=ExtResource("7_jxmml")]
 
 [node name="Label" type="Label" parent="."]
 visible = false

@@ -3,14 +3,17 @@ extends CharacterBody3D
 var current_state = "idle"
 var next_state = "idle"
 var previous_state
-
+var canMove = true
 var has_not_dropped_xp = true
+var gravity = 9.8
+
 
 @export var health = 1000
 @onready var nav = $NavigationAgent3D
-@onready var speed = 5.0
+@onready var speed = 105.0
 @onready var player 
 @onready var turn_speed = 2
+@onready var marker_3d = $"../Marker3D"
 
 @onready var blood_spray = preload("res://scenes/bloodsplatter.tscn")
 @onready var xp_drop = preload("res://scenes/xp_drop.tscn")
@@ -19,12 +22,16 @@ var has_not_dropped_xp = true
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
-	animation_player.set_speed_scale(1) 
+	next_state = "chase"
 
 	
 func _physics_process(delta):
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	
 	if previous_state != current_state:
 		$StateLabel.text = current_state
+		$StateLabel2.text = current_state
 	previous_state = current_state
 	current_state = next_state
 	
@@ -42,13 +49,13 @@ func _physics_process(delta):
 
 func chase(delta):
 	if previous_state != current_state:
-		animation_player.play("Running state")
+		animation_player.play("Walk")
 		
 	velocity = (nav.get_next_path_position() - position).normalized() * speed * delta
 	$FaceDirection.look_at(player.position, Vector3.UP)
 	rotate_y(deg_to_rad($FaceDirection.rotation.y * turn_speed))
 	
-	if player.position.distance_to(position) < 3:
+	if player.position.distance_to(position) < 7:
 		next_state = "bite"
 		
 	if player.position.distance_to(position) > 1:
@@ -56,9 +63,8 @@ func chase(delta):
 		move_and_collide(velocity)
 		
 func idle():
-	next_state = "chase"
 	if previous_state != current_state:
-		animation_player.play("Rest-loop")
+		animation_player.play("Swing")
 	
 func bite():
 	if previous_state != current_state:
@@ -78,7 +84,7 @@ func _on_area_3d_body_exited(body):
 
 func take_damage(num):
 	print("ouchies")
-	next_state = "flinch"
+	
 	var blood = blood_spray.instantiate()
 	blood.emitting = true
 	blood.position = position
@@ -138,21 +144,29 @@ func _on_area_3d_body_entered(body):
 
 
 func _on_take_damage_area_area_entered(area):
-	
-	if $TakeDMGTimer.time_left == 0:
-		play_hurt_sfx()
-		take_damage(20)
-		$TakeDMGTimer.start(.5)
+	print($TakeDMGTimer.time_left )
+	if area.is_in_group("sword"):
+		if $TakeDMGTimer.time_left == 0:
+			#play_hurt_sfx()
+			take_damage(20)
+			$TakeDMGTimer.start(.5)
 
 func play_hurt_sfx():
 	$AudioStreamPlayer.pitch_scale = randf_range(.7,.8)
 	$AudioStreamPlayer.play()
 	
 func deflect():
-	take_damage(50)
+	take_damage(100)
 	print("PARRIED, CASUAL!")
 
 
-func _on_attack_area_body_entered(body):
-	if body.is_in_group("player"):
-		body.take_damage(5)
+func _on_cut_scene_animation_finished(anim_name):
+	match anim_name:
+		"new_animation":
+			$"../../CanvasLayer/ColorRect3".visible = false
+			next_state = "chase"
+			position = marker_3d.position
+			$Pivot.rotation.y = deg_to_rad(90)
+
+
+

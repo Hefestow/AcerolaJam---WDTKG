@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://dr7ej5nl7gvaq"]
+[gd_scene load_steps=15 format=3 uid="uid://cdvc6qh7l8chl"]
 
-[ext_resource type="Script" path="res://scripts/door_system_script.gd" id="1_viuy4"]
-[ext_resource type="Material" uid="uid://c237ep0uqr6w1" path="res://materials/door.tres" id="2_2vi1l"]
-[ext_resource type="Texture2D" uid="uid://bao5x7qnsafx0" path="res://assets/doors_medieval_6431_9212_Small.png" id="3_1gq0d"]
-[ext_resource type="AudioStream" uid="uid://c2hxendc122qu" path="res://SFX/DoorSound.wav" id="4_mop88"]
+[ext_resource type="Script" path="res://scripts/door_system_script.gd" id="1_b8xee"]
+[ext_resource type="Material" uid="uid://c237ep0uqr6w1" path="res://materials/door.tres" id="2_arqcj"]
+[ext_resource type="Texture2D" uid="uid://bao5x7qnsafx0" path="res://assets/doors_medieval_6431_9212_Small.png" id="3_lil31"]
+[ext_resource type="AudioStream" uid="uid://c2hxendc122qu" path="res://SFX/DoorSound.wav" id="4_t1mxl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_y7iq7"]
 
@@ -16,7 +16,7 @@ cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 metallic = 1.0
 emission_enabled = true
-emission_texture = ExtResource("3_1gq0d")
+emission_texture = ExtResource("3_lil31")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_mildh"]
 _surfaces = [{
@@ -96,9 +96,8 @@ _data = {
 height = 1.20452
 radius = 1.28716
 
-[node name="Door" type="Node3D" node_paths=PackedStringArray("animation_player")]
-script = ExtResource("1_viuy4")
-animation_player = NodePath("AnimationPlayer")
+[node name="Door" type="Node3D"]
+script = ExtResource("1_b8xee")
 
 [node name="hinge" type="Node3D" parent="."]
 transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0, 0, 0)
@@ -106,7 +105,7 @@ transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0, 0, 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="hinge"]
 transform = Transform3D(0.6, 0, 0, 0, 1.11, 0, 0, 0, 0.105, 0.300287, 0, 0)
 visible = false
-material_override = ExtResource("2_2vi1l")
+material_override = ExtResource("2_arqcj")
 mesh = SubResource("BoxMesh_y7iq7")
 skeleton = NodePath("../StaticBody3D")
 
@@ -137,7 +136,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.194093, 0, 0.00363968)
 shape = SubResource("CylinderShape3D_5o51c")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_mop88")
+stream = ExtResource("4_t1mxl")
 pitch_scale = 0.52
 
 [connection signal="body_entered" from="Area3D" to="hinge/StaticBody3D" method="_on_area_3d_body_entered"]

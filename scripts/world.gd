@@ -6,6 +6,12 @@ extends Node3D
 @onready var label = $CanvasLayer/Label
 @onready var player_cam = $Player/Neck/Head/eyes/Camera3D
 @onready var cutscene_cam = $Cutscene/CutsceneCam
+@onready var undead = preload("res://undead_enemy_final.tscn")
+@onready var spawn_points = [$Spawner,$Spawner2,$Spawner3]
+@onready var spawn_timer = $SpawnTimer
+
+var enemy_count : int
+
 
 
 func _ready():
@@ -16,10 +22,13 @@ func _ready():
 		return
 	label.player_entered_chest_area.connect(interact_label)
 	label.player_left_chest_area.connect(interact_label_hide)
+	var undead_inst = undead.instantiate()
 	
+
+
 func change_level():
 	get_tree().change_scene_to_file("res://scenes/world_2.tscn")
-	print("ellooo")
+	
 	
 func level_transition():
 	level_transition_anim.play("fade_in_out")
@@ -37,6 +46,41 @@ func interact_label_hide():
 	$InteractLabel.visible = false
 
 
-func _on_area_3d_body_entered(body):
+
+func start_boss():
+	pass
+
+
+func areAllEnemiesDead():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	
+	for enemy in enemies:
+		if enemy.is_alive():  # Assuming you have a method like is_alive() to check if the enemy is still alive
+			return false
+			
+	return true
+
+
+
+
+
+
+func _on_start_boss_fight_area_body_entered(body):
 	if body.is_in_group("player"):
 		body.fall_off()
+
+
+func _on_start_boss_area_body_entered(body):
+	$NavigationRegion3D/Door.close()
+	spawn_timer.start()
+	enemy_count = 4
+	start_boss()
+
+
+func _on_spawn_timer_timeout():
+	enemy_count -= 1
+	if enemy_count >= 0:
+		for enemy in spawn_points:
+			var undead_inst = undead.instantiate()
+			undead_inst.global_position = enemy.global_position
+			add_child(undead_inst)

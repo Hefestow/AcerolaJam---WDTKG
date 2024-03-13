@@ -1,0 +1,21 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://cncy8d81452ym"]
+
+[ext_resource type="Sky" uid="uid://brpvfslmlghh" path="res://scenes/world_sky_main_men.tres" id="1_hhg48"]
+
+[resource]
+background_mode = 2
+sky = ExtResource("1_hhg48")
+ambient_light_energy = 0.0
+fog_light_color = Color(0.254902, 0.501961, 0.32549, 1)
+fog_light_energy = 0.82
+fog_density = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.017
+volumetric_fog_albedo = Color(0.568627, 0.835294, 0.4, 1)
+volumetric_fog_length = 203.64
+volumetric_fog_detail_spread = 1.7411
+volumetric_fog_sky_affect = 0.88
+adjustment_enabled = true
+adjustment_brightness = 0.86
+adjustment_contrast = 0.82
+adjustment_saturation = 0.95

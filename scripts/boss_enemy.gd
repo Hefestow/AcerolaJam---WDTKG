@@ -7,17 +7,17 @@ var canMove = true
 var has_not_dropped_xp = true
 var gravity = 9.8
 
-
+@export var marker_3d : Node3D
 @export var health = 1000
 @onready var nav = $NavigationAgent3D
 @onready var speed = 105.0
 @onready var player 
 @onready var turn_speed = 2
-@onready var marker_3d = $"../Marker3D"
+
 
 @onready var blood_spray = preload("res://scenes/bloodsplatter.tscn")
 @onready var xp_drop = preload("res://scenes/xp_drop.tscn")
-@onready var animation_player = $"../AnimationPlayer"
+@onready var animation_player = $AnimationPlayer
 
 
 func _ready():
@@ -49,13 +49,13 @@ func _physics_process(delta):
 
 func chase(delta):
 	if previous_state != current_state:
-		animation_player.play("Running state")
+		animation_player.play("Walk")
 		
 	velocity = (nav.get_next_path_position() - position).normalized() * speed * delta
 	$FaceDirection.look_at(player.position, Vector3.UP)
 	rotate_y(deg_to_rad($FaceDirection.rotation.y * turn_speed))
 	
-	if player.position.distance_to(position) < 3:
+	if player.position.distance_to(position) < 7:
 		next_state = "bite"
 		
 	if player.position.distance_to(position) > 1:
@@ -145,7 +145,7 @@ func _on_area_3d_body_entered(body):
 
 
 func _on_take_damage_area_area_entered(area):
-	print($TakeDMGTimer.time_left )
+	
 	if $TakeDMGTimer.time_left == 0:
 		play_hurt_sfx()
 		take_damage(20)
@@ -165,5 +165,5 @@ func _on_cut_scene_animation_finished(anim_name):
 		"new_animation":
 			$"../../CanvasLayer/ColorRect3".visible = false
 			next_state = "chase"
-			position = marker_3d.position
+			
 			$Pivot.rotation.y = deg_to_rad(90)

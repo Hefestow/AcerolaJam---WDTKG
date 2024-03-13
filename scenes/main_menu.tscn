@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://bx36ld3e5x8l4"]
+[gd_scene load_steps=15 format=3 uid="uid://bx36ld3e5x8l4"]
 
 [ext_resource type="PackedScene" uid="uid://vt22m8wwubq4" path="res://assets/castle.blend" id="1_0qbld"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_g2u5i"]
-[ext_resource type="Sky" uid="uid://brpvfslmlghh" path="res://scenes/world_sky_main_men.tres" id="3_o1g0j"]
+[ext_resource type="Environment" uid="uid://cncy8d81452ym" path="res://scenes/main_menu_worldenvironment.tres" id="3_1fm0m"]
 [ext_resource type="Texture2D" uid="uid://dufsi4t1bb5f5" path="res://assets/WDTKG.png" id="4_bltqu"]
 [ext_resource type="AudioStream" uid="uid://7byvrwkhx27p" path="res://SFX/Randomize13.wav" id="5_u2ra1"]
 [ext_resource type="AudioStream" uid="uid://cxpn18w068gwt" path="res://SFX/windmill_sound.wav" id="6_0qpxp"]
@@ -10,43 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://bev4u8iyacy54" path="res://assets/wdtkg_text_go_black.png" id="7_2l5va"]
 [ext_resource type="Texture2D" uid="uid://d0ceivcwmxyky" path="res://assets/wdtkg_text_go_white.png" id="8_vkf3a"]
 
-[sub_resource type="Environment" id="Environment_rqwjg"]
-background_mode = 2
-sky = ExtResource("3_o1g0j")
-ambient_light_energy = 0.0
-fog_light_color = Color(0.254902, 0.501961, 0.32549, 1)
-fog_light_energy = 0.82
-fog_density = 0.0
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.017
-volumetric_fog_albedo = Color(0.568627, 0.835294, 0.4, 1)
-volumetric_fog_length = 203.64
-volumetric_fog_detail_spread = 1.7411
-volumetric_fog_sky_affect = 0.88
-adjustment_enabled = true
-adjustment_brightness = 0.86
-adjustment_contrast = 0.82
-adjustment_saturation = 0.95
-
 [sub_resource type="BoxMesh" id="BoxMesh_amlsa"]
 size = Vector3(1, 1.63, 2.435)
-
-[sub_resource type="Animation" id="Animation_od5rw"]
-resource_name = "camera_waltz"
-length = 15.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 7, 15),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-37.0155, -2.94325, -285.149), Vector3(-41.575, -2.94325, -285.149), Vector3(-37.0155, -2.94325, -285.149)]
-}
 
 [sub_resource type="Animation" id="Animation_81try"]
 length = 0.001
@@ -85,6 +50,23 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_od5rw"]
+resource_name = "camera_waltz"
+length = 15.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 7, 15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-37.0155, -2.94325, -285.149), Vector3(-41.575, -2.94325, -285.149), Vector3(-37.0155, -2.94325, -285.149)]
 }
 
 [sub_resource type="Animation" id="Animation_qu31y"]
@@ -161,7 +143,7 @@ transform = Transform3D(-0.767175, 0.200725, -0.609222, 0.208507, 0.976235, 0.05
 fov = 50.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_rqwjg")
+environment = ExtResource("3_1fm0m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3699, -7.96135, -274.894)

@@ -2,7 +2,7 @@ extends Control
 
 
 @onready var rich_text_label = $Panel/RichTextLabel
-
+@export var label : Label
 @export_file("*.json") var d_file
 
 signal dialogue_finished
@@ -18,13 +18,17 @@ var chatterlimit: int = 120
 func _ready():
 	$Panel.visible = false
 	
+	
 func start():
 	if d_active:
 		return
 	print(d_file)
 	d_active = true
 	$Panel.visible = true
+	
 	dialogue = load_dialogue()
+	if label != null:
+		label.visible = false
 	if current_dialogue_id >= 10:
 		current_dialogue_id = 10
 		next_script()
@@ -49,7 +53,7 @@ func _input(event):
 			return
 		else:
 			next_script()
-			print(dialogue_len)
+			
 
 			
 			
@@ -91,7 +95,7 @@ func next_script():
 
 func _process(delta):
 	#show_chatter()
-	#print(draw_text_speed)
+	
 	pass
 
 func _on_timer_timeout():

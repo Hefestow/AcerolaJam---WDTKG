@@ -1,31 +1,31 @@
 [gd_scene load_steps=5 format=3 uid="uid://f2kypnebx5cd"]
 
 [ext_resource type="Script" path="res://scripts/illusory_wall.gd" id="1_0xpph"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_s6y1a"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_qxr5j"]
-size = Vector3(1.92871, 0.207855, 1.83972)
+[ext_resource type="PackedScene" uid="uid://raa8ka6jvy4u" path="res://assets/illuwall_2.glb" id="2_yhcyp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1po57"]
-size = Vector3(1.99048, 1.98926, 0.001)
+size = Vector3(6.65802, 4.03955, 0.001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qxr5j"]
+size = Vector3(6.699, 0.193, 4.04)
 
 [node name="illusoryWall" type="StaticBody3D"]
 script = ExtResource("1_0xpph")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-mesh = SubResource("PlaneMesh_s6y1a")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018158, -0.0383298, 0)
+shape = SubResource("BoxShape3D_1po57")
 
-[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+[node name="illuwall_2" parent="." instance=ExtResource("2_yhcyp")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="illuwall_2"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="illuwall_2/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.072403, 0.0414429)
 shape = SubResource("BoxShape3D_qxr5j")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_1po57")
-
-[connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="illuwall_2/Area3D" to="." method="_on_area_3d_area_entered"]

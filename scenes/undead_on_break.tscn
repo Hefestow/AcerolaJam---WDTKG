@@ -1,38 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0ou7cm5ya3he"]
+[gd_scene load_steps=6 format=3 uid="uid://c0ou7cm5ya3he"]
 
 [ext_resource type="PackedScene" uid="uid://du16t7dcoykmi" path="res://assets/undead.blend" id="1_6wwme"]
-[ext_resource type="Script" path="res://scripts/undead_enemy.gd" id="2_vtw8q"]
+[ext_resource type="Script" path="res://scripts/afk_enemy.gd" id="2_k6whw"]
 [ext_resource type="PackedScene" uid="uid://dp53fjaex67ts" path="res://dialogue/chatbox.tscn" id="3_pwycp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2xfe"]
-size = Vector3(6.71284, 4.41504, 7.43018)
+size = Vector3(6.47654, 8.08374, 6.96484)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v6vkx"]
+size = Vector3(1, 3.96173, 0.354004)
 
 [node name="undead" instance=ExtResource("1_6wwme")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-script = ExtResource("2_vtw8q")
+script = ExtResource("2_k6whw")
 
 [node name="Skeleton3D" parent="Armature" index="0"]
-bones/0/rotation = Quaternion(0.138311, 0.0253791, -0.00490268, 0.990052)
+bones/0/rotation = Quaternion(0.138243, 0.0253787, -0.00490444, 0.990061)
 bones/0/scale = Vector3(0.995256, 0.995255, 0.995256)
-bones/1/rotation = Quaternion(-0.0219672, -0.0481925, -0.0636826, 0.996564)
-bones/2/position = Vector3(0.244683, 0.611619, -0.00842565)
-bones/2/rotation = Quaternion(0.0215102, 0.164699, 0.972325, -0.164305)
+bones/1/rotation = Quaternion(-0.0234498, -0.0482033, -0.0634246, 0.996546)
+bones/2/position = Vector3(0.244638, 0.611537, -0.00887051)
+bones/2/rotation = Quaternion(0.0217484, 0.164839, 0.972246, -0.164598)
 bones/2/scale = Vector3(1.02713, 1.02713, 1.02713)
 bones/3/rotation = Quaternion(-0.0255306, 0.0165804, 0.13004, 0.991041)
-bones/3/scale = Vector3(1.2231, 1.2231, 1.2231)
-bones/4/position = Vector3(-0.373957, 0.602116, -0.0724371)
-bones/4/rotation = Quaternion(-0.0435933, 0.0817163, 0.986063, 0.138212)
+bones/3/scale = Vector3(1.30118, 1.30118, 1.30118)
+bones/4/position = Vector3(-0.373998, 0.60237, -0.0726334)
+bones/4/rotation = Quaternion(-0.0436786, 0.0815307, 0.986057, 0.138336)
 bones/4/scale = Vector3(1.06928, 1.06928, 1.06928)
 bones/5/rotation = Quaternion(0.164143, -4.92784e-05, 0.1264, 0.978305)
 bones/6/position = Vector3(0.14067, -0.10277, 0.124682)
 bones/6/rotation = Quaternion(-0.0255165, 0.277733, 0.952923, -0.118958)
-bones/6/scale = Vector3(1.0756, 1.0756, 1.0756)
+bones/6/scale = Vector3(1.10206, 1.10206, 1.10206)
+bones/7/rotation = Quaternion(-0.11579, -0.0360029, -0.0892577, 0.9886)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.43697, 0.491044, 0.444422, 0.608623)
+bones/8/rotation = Quaternion(0.43697, 0.491044, 0.444423, 0.608623)
 bones/9/position = Vector3(-0.225907, -0.0991273, 0.0795799)
-bones/9/rotation = Quaternion(-0.00848527, 0.203342, 0.977386, 0.0574222)
+bones/9/rotation = Quaternion(-0.00848526, 0.203342, 0.977386, 0.0574222)
 bones/9/scale = Vector3(1, 1, 1)
-bones/10/rotation = Quaternion(0.00944988, 0.00889586, 0.11462, 0.993325)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(0.398258, -0.520636, -0.503783, 0.562611)
 bones/11/scale = Vector3(1, 1, 1)
@@ -41,13 +44,14 @@ bones/11/scale = Vector3(1, 1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.874005, 0.0628448, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65748, 0.890137, 0.619873)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.81264, 0.294224, 0.441955)
 shape = SubResource("BoxShape3D_s2xfe")
 
 [node name="Timer" type="Timer" parent="." index="4"]
 autostart = true
 
-[node name="Chatbox" parent="." index="5" instance=ExtResource("3_pwycp")]
+[node name="Chatbox" parent="." index="5" node_paths=PackedStringArray("label") instance=ExtResource("3_pwycp")]
+label = NodePath("../Label")
 
 [node name="Cylinder" parent="." index="6"]
 visible = false
@@ -63,6 +67,10 @@ offset_right = 738.0
 offset_bottom = 628.0
 theme_override_font_sizes/font_size = 40
 text = "[E] Talk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0456123, -0.188224, -0.322998)
+shape = SubResource("BoxShape3D_v6vkx")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
